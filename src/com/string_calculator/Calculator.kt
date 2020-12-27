@@ -24,7 +24,7 @@ class Input(private var input: String) {
         val defaultDelimiters = mutableListOf(",", "\n")
         if (this.usesCustomDelimiterSyntax()) {
             val customDelimiter = this.extractDelimiter()
-            customDelimiter.getDelimiters().forEach { defaultDelimiters.add(it) }
+            customDelimiter.forEach { defaultDelimiters.add(it) }
             input = this.secondLine()
         }
         return input.split(defaultDelimiters).toIntList()
@@ -66,8 +66,8 @@ class Input(private var input: String) {
     private fun List<String>.toIntList(): List<Int> = map { it.toInt() }
 }
 
-class Delimiter(private val delimiters: List<String>) {
+class Delimiter(private val delimiters: List<String>) : Iterable<String> {
     internal fun isOfAnyLength() = delimiters.any { it.contains("[") }
 
-    internal fun getDelimiters() = delimiters
+    override fun iterator(): Iterator<String> = delimiters.iterator()
 }
