@@ -1,4 +1,4 @@
-package training.string_calculator
+package com.string_calculator
 
 object Calculator {
     fun add(input: String) =

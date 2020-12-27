@@ -1,4 +1,4 @@
-package training.string_calculator
+package com.string_calculator
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
