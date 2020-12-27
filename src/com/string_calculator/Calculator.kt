@@ -1,58 +1,73 @@
-package com.string_calculator
+package training.string_calculator
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
-class Calculator {
-    companion object {
-        private const val NEUTRAL_VALUE = 0
-
-        fun add(input: String) = input.extractNumbers()
+object Calculator {
+    fun add(input: String) =
+        Input(input)
+            .extractNumbers()
             .ignoreNumbersBiggerThan(1000)
-            .handleNegativeNumbers()
+            .throwExceptionOnNegativeNumbers()
             .sum()
 
-        private fun String.extractNumbers(): List<Int> {
-            if (this.isEmpty()) {
-                return mutableListOf(NEUTRAL_VALUE)
-            } else {
-                val input: List<String>
-                if (this.usesCustomDelimiterSyntax()) {
-                    // TODO: A revoir avec Jasmine
-                    val secondLine = this.substring(this.indexOf("\n") + 1)
-                    input = secondLine.split(this.extractDelimiter())
-                } else {
-                    input = this.split(",", "\n")
-                }
-                return input.convertToListOfInt()
-            }
-        }
+    private fun List<Int>.ignoreNumbersBiggerThan(number: Int) = filter { it <= number }
 
-        private fun String.usesCustomDelimiterSyntax() = this.startsWith("""//""")
-
-        private fun String.extractDelimiter(): String {
-            val matcher: Matcher = Pattern.compile("""//(.)\n(.*)""").matcher(this)
-            matcher.matches()
-            return matcher.group(1)
-        }
-
-        private fun List<String>.convertToListOfInt(): List<Int> {
-            val numbers = mutableListOf<Int>()
-            this.forEach { numbers.add(it.toInt()) }
-            return numbers
-        }
-
-        private fun List<Int>.handleNegativeNumbers(): List<Int> {
-            val negatives = this.filter { it < 0 }
-            if (negatives.isNotEmpty()) {
-                throw RuntimeException("Negatives are not allowed: " + negatives.joinToString(","))
-            } else {
-                return this
-            }
-        }
-
-        private fun List<Int>.ignoreNumbersBiggerThan(number: Int): List<Int> {
-            return this.filter { it <= number }
+    private fun List<Int>.throwExceptionOnNegativeNumbers(): List<Int> = apply {
+        val negatives = filter { it < 0 }
+        if (negatives.isNotEmpty()) {
+            throw RuntimeException("Negatives not allowed: ${negatives.joinToString(",")}")
         }
     }
+}
+
+class Input(private var input: String) {
+    internal fun extractNumbers(): List<Int> {
+        this.convertEmptyInput()
+        val defaultDelimiters = mutableListOf(",", "\n")
+        if (this.usesCustomDelimiterSyntax()) {
+            val customDelimiter = this.extractDelimiter()
+            customDelimiter.getDelimiters().forEach { defaultDelimiters.add(it) }
+            input = this.secondLine()
+        }
+        return input.split(defaultDelimiters).toIntList()
+    }
+
+    private fun convertEmptyInput() = apply { if (input.isEmpty()) input = "0" }
+
+    private fun usesCustomDelimiterSyntax() = input.startsWith("//")
+
+    private fun extractDelimiter(): Delimiter {
+        var delimiter = Delimiter(listOf(input.substring(input.indexOf("//") + 2, input.indexOf("\n"))))
+        if (delimiter.isOfAnyLength()) {
+            val delimiters = this.allDelimiters()
+            delimiter = Delimiter(delimiters)
+        }
+        return delimiter
+    }
+
+    private fun allDelimiters(): List<String> {
+        val delimiters = mutableListOf<String>()
+        while (this.hasDelimiter()) {
+            val delimiter = input.substring(input.indexOf("[") + 1, input.indexOf("]"))
+            delimiters.add(delimiter)
+            this.lookForNextDelimiter()
+        }
+        return delimiters
+    }
+
+    private fun hasDelimiter() = input.contains("[")
+
+    private fun lookForNextDelimiter() {
+        input = input.substring(input.indexOf("]") + 1)
+    }
+
+    private fun secondLine() = input.substring(input.indexOf("\n") + 1)
+
+    private fun String.split(delimiters: List<String>) = split(*delimiters.toTypedArray())
+
+    private fun List<String>.toIntList(): List<Int> = map { it.toInt() }
+}
+
+class Delimiter(private val delimiters: List<String>) {
+    internal fun isOfAnyLength() = delimiters.any { it.contains("[") }
+
+    internal fun getDelimiters() = delimiters
 }
