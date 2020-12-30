@@ -18,4 +18,20 @@ internal class SaleTest {
         // Then
         assertEquals(ticketExpected, result)
     }
+
+    @Test
+    fun `given 1 book at 12_49 then no tax is applied`() {
+        // Given
+        val input = "1 book at 12.49"
+        val ticketExpected = """1 book: 12.49
+            |Sales Taxes: 0.00
+            |Total: 12.49
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
 }
