@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class SaleTest {
-    private val book = Product("book", 12.49F, taxType = NoTax())
-    private val chocolateBar = Product("chocolate bar", 0.85F, taxType = NoTax())
-    private val musicCD = Product("music CD", 14.99F, taxType = BasicTax())
+    private val book = Product("book", 12.49F, taxType = NoTax(), importType = NotImported())
+    private val chocolateBar = Product("chocolate bar", 0.85F, taxType = NoTax(), importType = NotImported())
+    private val musicCD = Product("music CD", 14.99F, taxType = BasicTax(), importType = NotImported())
 
     private val importedBoxOfChocolates =
         Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported())
