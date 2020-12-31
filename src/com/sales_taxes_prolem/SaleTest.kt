@@ -11,15 +11,19 @@ internal class SaleTest {
     private val importedBoxOfChocolates =
         Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported())
 
+    private val importedBottleOfPerfume =
+        Product("imported bottle of perfume", 47.5F, taxType = BasicTax(), importType = Imported())
+
     @Test
     fun `given empty input then ticket is empty`() {
         // Given
+        val orderItems = mutableListOf<OrderItem>()
         val ticketExpected = """Sales Taxes: 0.00
             |Total: 0.00
         """.trimMargin()
 
         // When
-        val result = EmptyTicket().print()
+        val result = EmptyTicket(Order(orderItems)).print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -155,6 +159,27 @@ internal class SaleTest {
         val ticketExpected = """1 imported box of chocolates: 10.50
             |Sales Taxes: 0.50
             |Total: 10.50
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
+
+    @Test
+    fun `test with 1 imported box of chocolates and 1 imported bottle of perfume`() {
+        // Given
+        val orderItems = mutableListOf<OrderItem>()
+        orderItems.add(OrderItem(importedBoxOfChocolates, 1))
+        orderItems.add(OrderItem(importedBottleOfPerfume, 1))
+
+        val input = Order(orderItems)
+        val ticketExpected = """1 imported box of chocolates: 10.50
+            |1 imported bottle of perfume: 54.65
+            |Sales Taxes: 7.65
+            |Total: 65.15
         """.trimMargin()
 
         // When
