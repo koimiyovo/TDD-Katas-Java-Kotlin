@@ -5,7 +5,7 @@ class Product(val name: String, private val price: Float, val taxType: TaxType, 
 
     fun totalTax() = basicTax() + importTax()
 
-    private fun basicTax() = price * taxType.percentage
+    private fun basicTax() = Round.roundToNearest005(price * taxType.percentage)
 
-    private fun importTax() = price * importType.percentage
+    private fun importTax() = Round.roundToNearest005(price * importType.percentage)
 }

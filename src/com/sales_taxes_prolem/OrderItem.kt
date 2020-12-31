@@ -6,5 +6,5 @@ class OrderItem(private val product: Product, private val quantity: Int) {
 
     fun tax() = product.totalTax() * quantity
 
-    fun resume(): String = "$quantity ${product.name}: ${Round.roundTo2DecimalPoint(totalTTC())}"
+    fun resume(): String = "$quantity ${product.name}: ${Round.withFormat2DecimalPoint(totalTTC())}"
 }
