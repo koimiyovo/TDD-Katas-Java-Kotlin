@@ -8,6 +8,9 @@ internal class SaleTest {
     private val chocolateBar = Product("chocolate bar", 0.85F, taxType = NoTax())
     private val musicCD = Product("music CD", 14.99F, taxType = BasicTax())
 
+    private val importedBoxOfChocolates =
+        Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported())
+
     @Test
     fun `given empty input then ticket is empty`() {
         // Given
@@ -133,6 +136,25 @@ internal class SaleTest {
             |1 chocolate bar: 0.85
             |Sales Taxes: 1.50
             |Total: 42.32
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
+
+    @Test
+    fun `given one imported product then import tax is applied`() {
+        // Given
+        val orderItems = mutableListOf<OrderItem>()
+        orderItems.add(OrderItem(importedBoxOfChocolates, 1))
+
+        val input = Order(orderItems)
+        val ticketExpected = """1 imported box of chocolates: 10.50
+            |Sales Taxes: 0.50
+            |Total: 10.50
         """.trimMargin()
 
         // When
