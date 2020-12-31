@@ -1,3 +1,7 @@
 package com.sales_taxes_prolem
 
-data class Product(val name: String, val price: Float)
+class Product(val name: String, private val price: Float, val taxType: TaxType) {
+    fun priceTTC() = price + basicTax()
+
+    fun basicTax() = price * taxType.percentage
+}

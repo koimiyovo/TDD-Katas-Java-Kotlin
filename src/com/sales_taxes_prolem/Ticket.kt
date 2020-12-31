@@ -4,7 +4,7 @@ open class Ticket(private val order: Order?) {
     open fun print(): String {
         val output = StringBuilder()
         output.appendLine(order?.orderSummary())
-        output.appendLine("Sales Taxes: ${Round.roundTo2DecimalPoint(order?.totalTaxes())}")
+        output.appendLine("Sales Taxes: ${Round.roundTo2DecimalPoint(order?.totalOrderTaxes())}")
         output.appendLine("Total: ${Round.roundTo2DecimalPoint(order?.totalOrderTTC())}")
         return output.trimEnd().toString()
     }
