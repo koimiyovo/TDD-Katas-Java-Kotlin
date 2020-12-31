@@ -1,8 +1,7 @@
 package com.sales_taxes_prolem
 
-open class TaxType(val percentage: Float) {
-}
+open class TaxType(val percentage: Float)
 
-class BasicTax : TaxType(0.10F)
+class BasicTax : TaxType(0.1F)
 
-class NoTax : TaxType(0.00F)
+class NoTax : TaxType(0F)

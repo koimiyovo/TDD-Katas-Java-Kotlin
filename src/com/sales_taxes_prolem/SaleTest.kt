@@ -1,29 +1,19 @@
 package com.sales_taxes_prolem
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class SaleTest {
-    private val book = Product("book", 12.49F, taxType = NoTax(), importType = NotImported())
-    private val chocolateBar = Product("chocolate bar", 0.85F, taxType = NoTax(), importType = NotImported())
-    private val musicCD = Product("music CD", 14.99F, taxType = BasicTax(), importType = NotImported())
-
-    private val importedBoxOfChocolates =
-        Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported())
-
-    private val importedBottleOfPerfume =
-        Product("imported bottle of perfume", 47.5F, taxType = BasicTax(), importType = Imported())
-
     @Test
     fun `given empty input then ticket is empty`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
         val ticketExpected = """Sales Taxes: 0.00
             |Total: 0.00
         """.trimMargin()
 
         // When
-        val result = EmptyTicket(Order(orderItems)).print()
+        val result = EmptyTicket().print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -32,8 +22,9 @@ internal class SaleTest {
     @Test
     fun `given 1 book at 12_49 then no tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(book, 1))
+        val book = OrderItem(Product("book", 12.49F, taxType = NoTax(), importType = NotImported()), 1)
+
+        val orderItems = mutableListOf(book)
 
         val input = Order(orderItems)
         val ticketExpected = """1 book: 12.49
@@ -51,8 +42,9 @@ internal class SaleTest {
     @Test
     fun `given 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(chocolateBar, 1))
+        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, taxType = NoTax(), importType = NotImported()), 1)
+
+        val orderItems = mutableListOf(chocolateBar)
 
         val input = Order(orderItems)
         val ticketExpected = """1 chocolate bar: 0.85
@@ -70,9 +62,10 @@ internal class SaleTest {
     @Test
     fun `given 1 book at 12_49 and 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(book, 1))
-        orderItems.add(OrderItem(chocolateBar, 1))
+        val book = OrderItem(Product("book", 12.49F, taxType = NoTax(), importType = NotImported()), 1)
+        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, taxType = NoTax(), importType = NotImported()), 1)
+
+        val orderItems = mutableListOf(book, chocolateBar)
 
         val input = Order(orderItems)
         val ticketExpected = """1 book: 12.49
@@ -91,8 +84,9 @@ internal class SaleTest {
     @Test
     fun `given 1 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(musicCD, 1))
+        val musicCD = OrderItem(Product("music CD", 14.99F, taxType = BasicTax(), importType = NotImported()), 1)
+
+        val orderItems = mutableListOf(musicCD)
 
         val input = Order(orderItems)
         val ticketExpected = """1 music CD: 16.49
@@ -110,8 +104,9 @@ internal class SaleTest {
     @Test
     fun `given 2 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(musicCD, 2))
+        val musicCD = OrderItem(Product("music CD", 14.99F, taxType = BasicTax(), importType = NotImported()), 2)
+
+        val orderItems = mutableListOf(musicCD)
 
         val input = Order(orderItems)
         val ticketExpected = """2 music CD: 32.98
@@ -129,10 +124,11 @@ internal class SaleTest {
     @Test
     fun `test with 2 books and 1 music CD and 1 chocolate bar`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(book, 2))
-        orderItems.add(OrderItem(musicCD, 1))
-        orderItems.add(OrderItem(chocolateBar, 1))
+        val book = OrderItem(Product("book", 12.49F, taxType = NoTax(), importType = NotImported()), 2)
+        val musicCD = OrderItem(Product("music CD", 14.99F, taxType = BasicTax(), importType = NotImported()), 1)
+        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, taxType = NoTax(), importType = NotImported()), 1)
+
+        val orderItems = mutableListOf(book, musicCD, chocolateBar)
 
         val input = Order(orderItems)
         val ticketExpected = """2 book: 24.98
@@ -152,8 +148,10 @@ internal class SaleTest {
     @Test
     fun `given one imported product then import tax is applied`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(importedBoxOfChocolates, 1))
+        val importedBoxOfChocolates =
+            OrderItem(Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported()), 1)
+
+        val orderItems = mutableListOf(importedBoxOfChocolates)
 
         val input = Order(orderItems)
         val ticketExpected = """1 imported box of chocolates: 10.50
@@ -171,15 +169,55 @@ internal class SaleTest {
     @Test
     fun `test with 1 imported box of chocolates and 1 imported bottle of perfume`() {
         // Given
-        val orderItems = mutableListOf<OrderItem>()
-        orderItems.add(OrderItem(importedBoxOfChocolates, 1))
-        orderItems.add(OrderItem(importedBottleOfPerfume, 1))
+        val importedBoxOfChocolates =
+            OrderItem(Product("imported box of chocolates", 10F, taxType = NoTax(), importType = Imported()), 1)
+        val importedBottleOfPerfume =
+            OrderItem(Product("imported bottle of perfume", 47.5F, taxType = BasicTax(), importType = Imported()), 1)
+
+        val orderItems = mutableListOf(importedBoxOfChocolates, importedBottleOfPerfume)
 
         val input = Order(orderItems)
         val ticketExpected = """1 imported box of chocolates: 10.50
             |1 imported bottle of perfume: 54.65
             |Sales Taxes: 7.65
             |Total: 65.15
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
+
+    @Disabled
+    @Test
+    fun `test input 3`() {
+        // Given
+        val importedBottleOfPerfume =
+            OrderItem(Product("imported bottle of perfume", 27.99F, taxType = BasicTax(), importType = Imported()), 1)
+        val notImportedBottleOfPerfume =
+            OrderItem(Product("bottle of perfume", 18.99F, taxType = BasicTax(), importType = NotImported()), 1)
+        val packetOfHeadachePills =
+            OrderItem(Product("packet of headache pills", 9.75F, taxType = NoTax(), importType = NotImported()), 1)
+        val boxOfImportedChocolates =
+            OrderItem(Product("box of imported chocolates", 11.25F, taxType = NoTax(), importType = Imported()), 3)
+
+        val orderItems =
+            mutableListOf(
+                importedBottleOfPerfume,
+                notImportedBottleOfPerfume,
+                packetOfHeadachePills,
+                boxOfImportedChocolates
+            )
+
+        val input = Order(orderItems)
+        val ticketExpected = """1 imported bottle of perfume: 32.19
+            |1 bottle of perfume: 20.89
+            |1 packet of headache pills: 9.75
+            |3 imported box of chocolates: 35.55
+            |Sales Taxes: 7.90
+            |Total: 98.38
         """.trimMargin()
 
         // When
