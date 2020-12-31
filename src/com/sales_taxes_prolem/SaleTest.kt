@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class SaleTest {
-    private val book = Product("book", 12.49F)
-    private val chocolateBar = Product("chocolate bar", 0.85F)
+    private val book = Product("book", 12.49F, taxType = NoTax())
+    private val chocolateBar = Product("chocolate bar", 0.85F, taxType = NoTax())
+    private val musicCD = Product("music CD", 14.99F, taxType = BasicTax())
 
     @Test
     fun `given empty input then ticket is empty`() {
@@ -71,6 +72,25 @@ internal class SaleTest {
             |1 chocolate bar: 0.85
             |Sales Taxes: 0.00
             |Total: 13.34
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
+
+    @Test
+    fun `given 1 music CD at 14_99 then the basic tax is applied`() {
+        // Given
+        val orderItems = mutableListOf<OrderItem>()
+        orderItems.add(OrderItem(musicCD, 1))
+
+        val input = Order(orderItems)
+        val ticketExpected = """1 music CD: 16.49
+            |Sales Taxes: 1.50
+            |Total: 16.49
         """.trimMargin()
 
         // When
