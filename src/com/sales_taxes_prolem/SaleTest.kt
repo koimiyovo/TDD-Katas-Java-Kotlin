@@ -99,4 +99,46 @@ internal class SaleTest {
         // Then
         assertEquals(ticketExpected, result)
     }
+
+    @Test
+    fun `given 2 music CD at 14_99 then the basic tax is applied`() {
+        // Given
+        val orderItems = mutableListOf<OrderItem>()
+        orderItems.add(OrderItem(musicCD, 2))
+
+        val input = Order(orderItems)
+        val ticketExpected = """2 music CD: 32.98
+            |Sales Taxes: 3.00
+            |Total: 32.98
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
+
+    @Test
+    fun `test with 2 books and 1 music CD and 1 chocolate bar`() {
+        // Given
+        val orderItems = mutableListOf<OrderItem>()
+        orderItems.add(OrderItem(book, 2))
+        orderItems.add(OrderItem(musicCD, 1))
+        orderItems.add(OrderItem(chocolateBar, 1))
+
+        val input = Order(orderItems)
+        val ticketExpected = """2 book: 24.98
+            |1 music CD: 16.49
+            |1 chocolate bar: 0.85
+            |Sales Taxes: 1.50
+            |Total: 42.32
+        """.trimMargin()
+
+        // When
+        val result = Ticket(input).print()
+
+        // Then
+        assertEquals(ticketExpected, result)
+    }
 }
