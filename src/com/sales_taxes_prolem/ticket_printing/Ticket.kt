@@ -3,6 +3,7 @@ package com.sales_taxes_prolem.ticket_printing
 import com.sales_taxes_prolem.tax_management.Order
 
 abstract class Ticket(private val order: Order? = null) {
+    
     abstract fun print(): String
 
     abstract fun orderSummary(): String

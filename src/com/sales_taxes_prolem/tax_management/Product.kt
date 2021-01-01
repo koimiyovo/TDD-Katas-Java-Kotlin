@@ -2,8 +2,12 @@ package com.sales_taxes_prolem.tax_management
 
 import com.sales_taxes_prolem.utils.Round
 
-class Product(val name: String, private val price: Float, val taxType: TaxType, val importType: ImportType) {
-
+class Product(
+    val name: String,
+    private val price: Float,
+    private val taxType: TaxType,
+    private val importType: ImportType
+) {
     fun productPriceTTC() = price + productTax()
 
     fun productTax() = basicTax() + importTax()
