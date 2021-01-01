@@ -2,11 +2,15 @@ package com.sales_taxes_prolem.ticket_printing
 
 import com.sales_taxes_prolem.tax_management.Order
 
-class TextTicket(private val order: Order) : Ticket(order) {
+class TextTicket(private val order: Order) : Ticket() {
+    
+    init {
+        ticketOrder = this.order
+    }
 
-    override fun orderSummary(): String = order.orderSummary()
+    override fun orderSummary(): String = ticketOrder.orderSummary()
 
-    override fun totalTaxes(): Float = order.totalOrderTaxes()
+    override fun totalTaxes(): Float = ticketOrder.totalOrderTaxes()
 
-    override fun totalTTC(): Float = order.totalOrderTTC()
+    override fun totalTTC(): Float = ticketOrder.totalOrderTTC()
 }
