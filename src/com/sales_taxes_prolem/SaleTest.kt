@@ -1,5 +1,10 @@
 package com.sales_taxes_prolem
 
+import com.sales_taxes_prolem.tax_management.*
+import com.sales_taxes_prolem.ticket_printing.EmptyTicket
+import com.sales_taxes_prolem.ticket_printing.EmptyTicketPrinter
+import com.sales_taxes_prolem.ticket_printing.TextTicket
+import com.sales_taxes_prolem.ticket_printing.TextTicketPrinter
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -13,7 +18,9 @@ internal class SaleTest {
         """.trimMargin()
 
         // When
-        val result = EmptyTicket().print()
+        val ticket = EmptyTicket()
+        val ticketPrinter = EmptyTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -26,14 +33,16 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(book)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 book: 12.49
             |Sales Taxes: 0.00
             |Total: 12.49
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -46,14 +55,16 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(chocolateBar)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 chocolate bar: 0.85
             |Sales Taxes: 0.00
             |Total: 0.85
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -67,7 +78,7 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(book, chocolateBar)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 book: 12.49
             |1 chocolate bar: 0.85
             |Sales Taxes: 0.00
@@ -75,7 +86,9 @@ internal class SaleTest {
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -88,14 +101,16 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(musicCD)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 music CD: 16.49
             |Sales Taxes: 1.50
             |Total: 16.49
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -108,14 +123,16 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(musicCD)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """2 music CD: 32.98
             |Sales Taxes: 3.00
             |Total: 32.98
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -130,7 +147,7 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(book, musicCD, chocolateBar)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """2 book: 24.98
             |1 music CD: 16.49
             |1 chocolate bar: 0.85
@@ -139,7 +156,9 @@ internal class SaleTest {
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -153,14 +172,16 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(importedBoxOfChocolates)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 imported box of chocolates: 10.50
             |Sales Taxes: 0.50
             |Total: 10.50
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -176,7 +197,7 @@ internal class SaleTest {
 
         val orderItems = mutableListOf(importedBoxOfChocolates, importedBottleOfPerfume)
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 imported box of chocolates: 10.50
             |1 imported bottle of perfume: 54.65
             |Sales Taxes: 7.65
@@ -184,7 +205,9 @@ internal class SaleTest {
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)
@@ -192,7 +215,7 @@ internal class SaleTest {
 
     @Disabled
     @Test
-    fun `test input 3`() {
+    fun `test with imported proucts with and without tax and not imported products with and without tax`() {
         // Given
         val importedBottleOfPerfume =
             OrderItem(Product("imported bottle of perfume", 27.99F, taxType = BasicTax(), importType = Imported()), 1)
@@ -211,7 +234,7 @@ internal class SaleTest {
                 boxOfImportedChocolates
             )
 
-        val input = Order(orderItems)
+        val order = Order(orderItems)
         val ticketExpected = """1 imported bottle of perfume: 32.19
             |1 bottle of perfume: 20.89
             |1 packet of headache pills: 9.75
@@ -221,7 +244,9 @@ internal class SaleTest {
         """.trimMargin()
 
         // When
-        val result = Ticket(input).print()
+        val ticket = TextTicket(order)
+        val ticketPrinter = TextTicketPrinter(ticket)
+        val result = ticketPrinter.print()
 
         // Then
         assertEquals(ticketExpected, result)

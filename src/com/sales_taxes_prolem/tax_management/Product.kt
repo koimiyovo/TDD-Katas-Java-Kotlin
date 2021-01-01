@@ -1,4 +1,6 @@
-package com.sales_taxes_prolem
+package com.sales_taxes_prolem.tax_management
+
+import com.sales_taxes_prolem.utils.Round
 
 class Product(val name: String, private val price: Float, val taxType: TaxType, val importType: ImportType) {
 

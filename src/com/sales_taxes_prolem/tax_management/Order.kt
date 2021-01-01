@@ -1,4 +1,4 @@
-package com.sales_taxes_prolem
+package com.sales_taxes_prolem.tax_management
 
 class Order(private val orderItems: List<OrderItem>) {
 
