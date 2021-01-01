@@ -1,14 +1,3 @@
 package com.sales_taxes_prolem.ticket_printing
 
-import com.sales_taxes_prolem.tax_management.Order
-
-abstract class Ticket() {
-
-    lateinit var ticketOrder: Order
-
-    abstract fun orderSummary(): String
-
-    abstract fun totalTaxes(): Float
-
-    abstract fun totalTTC(): Float
-}
+abstract class Ticket(val orderSummary: String, val totalTaxes: Float, val totalTTC: Float)
