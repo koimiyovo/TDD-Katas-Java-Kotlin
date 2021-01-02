@@ -5,11 +5,106 @@ import com.sales_taxes_prolem.ticket_printing.EmptyTicket
 import com.sales_taxes_prolem.ticket_printing.EmptyTicketPrinter
 import com.sales_taxes_prolem.ticket_printing.TextTicket
 import com.sales_taxes_prolem.ticket_printing.TextTicketPrinter
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class SaleTest {
+    @Test
+    fun `given one product at price of 10 exampt of tax and not imported then price including VAT is 10`() {
+        // Given
+        val item = OrderItem(Product("product", 10F, NoTax(), NotImported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(10F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 15 exampt of tax and not imported then price including VAT is 15`() {
+        // Given
+        val item = OrderItem(Product("product", 15F, NoTax(), NotImported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(15F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 10 with basic tax and not imported then price including VAT is 11`() {
+        // Given
+        val item = OrderItem(Product("product", 10F, BasicTax(), NotImported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(11F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 15 with basic tax and not imported then price including VAT is 16_5`() {
+        // Given
+        val item = OrderItem(Product("product", 15F, BasicTax(), NotImported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(16.5F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 10 exampt of tax and imported then price including VAT is 10_5`() {
+        // Given
+        val item = OrderItem(Product("product", 10F, NoTax(), Imported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(10.5F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 15 exampt of tax and imported then price including VAT is 15_75`() {
+        // Given
+        val item = OrderItem(Product("product", 15F, NoTax(), Imported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(15.75F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 10 with basic tax and imported then price including VAT is 11_5`() {
+        // Given
+        val item = OrderItem(Product("product", 10F, BasicTax(), Imported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(11.5F, priceAllTaxesIncluded)
+    }
+
+    @Test
+    fun `given one product at price of 15 with basic tax and imported then price including VAT is 17_25`() {
+        // Given
+        val item = OrderItem(Product("product", 15F, BasicTax(), Imported()), 1)
+
+        // When
+        val priceAllTaxesIncluded = item.priceIncludingTaxes()
+
+        // Then
+        assertEquals(17.25F, priceAllTaxesIncluded)
+    }
+
     @Test
     fun `given empty input then ticket is empty`() {
         // Given
@@ -213,7 +308,6 @@ internal class SaleTest {
         assertEquals(ticketExpected, result)
     }
 
-    @Disabled
     @Test
     fun `test with imported proucts with and without tax and not imported products with and without tax`() {
         // Given
@@ -224,7 +318,7 @@ internal class SaleTest {
         val packetOfHeadachePills =
             OrderItem(Product("packet of headache pills", 9.75F, taxType = NoTax(), importType = NotImported()), 1)
         val boxOfImportedChocolates =
-            OrderItem(Product("box of imported chocolates", 11.25F, taxType = NoTax(), importType = Imported()), 3)
+            OrderItem(Product("imported box of chocolates", 11.25F, taxType = NoTax(), importType = Imported()), 3)
 
         val orderItems =
             mutableListOf(
@@ -238,9 +332,9 @@ internal class SaleTest {
         val ticketExpected = """1 imported bottle of perfume: 32.19
             |1 bottle of perfume: 20.89
             |1 packet of headache pills: 9.75
-            |3 imported box of chocolates: 35.55
-            |Sales Taxes: 7.90
-            |Total: 98.38
+            |3 imported box of chocolates: 35.40
+            |Sales Taxes: 7.75
+            |Total: 98.23
         """.trimMargin()
 
         // When
