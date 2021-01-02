@@ -8,9 +8,9 @@ class Product(
     private val taxType: TaxType,
     private val importType: ImportType
 ) {
-    fun productPriceTTC() = price + productTax()
+    fun priceIncludingTaxes() = price + taxes()
 
-    fun productTax() = basicTax() + importTax()
+    fun taxes() = basicTax() + importTax()
 
     private fun basicTax() = Round.roundToNearest005(price * taxType.percentage)
 

@@ -4,9 +4,9 @@ import com.sales_taxes_prolem.utils.Format.withTwoDecimalPoint
 
 class OrderItem(private val product: Product, private val quantity: Int) {
 
-    fun totalTTC() = product.productPriceTTC() * quantity
+    fun priceIncludingTaxes() = product.priceIncludingTaxes() * quantity
 
-    fun tax() = product.productTax() * quantity
+    fun taxes() = product.taxes() * quantity
 
-    fun resumeLine(): String = "$quantity ${product.name}: ${totalTTC().withTwoDecimalPoint()}"
+    fun resumeLine(): String = "$quantity ${product.name}: ${priceIncludingTaxes().withTwoDecimalPoint()}"
 }
