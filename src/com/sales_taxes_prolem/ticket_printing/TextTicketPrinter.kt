@@ -7,7 +7,7 @@ class TextTicketPrinter(override val ticket: TextTicket) : IStringPrinter {
         val output = StringBuilder()
         output.appendLine(ticket.orderSummary)
         output.appendLine("Sales Taxes: ${ticket.totalTaxes.withTwoDecimalPoint()}")
-        output.appendLine("Total: ${ticket.totalTTC.withTwoDecimalPoint()}")
+        output.appendLine("Total: ${ticket.totalAmountIncludingTaxes.withTwoDecimalPoint()}")
         return output.trimEnd().toString()
     }
 }
