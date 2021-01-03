@@ -1,6 +1,6 @@
 package com.tdd_by_example.money
 
-class Dollar(amount: Int) : Money(amount) {
+class Dollar(amount: Int, currency: String) : Money(amount, currency) {
 
-    override fun times(multiplier: Int): Money = Dollar(amount * multiplier)
+    override fun times(multiplier: Int): Money = Money.dollar(amount * multiplier)
 }
