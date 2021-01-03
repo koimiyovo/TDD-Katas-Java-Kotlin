@@ -19,9 +19,9 @@ internal class MoneyTest {
     @Test
     fun `test equality`() {
         assertAll(
-            { assertTrue(Money.dollar(5).equals(Money.dollar(5))) },
-            { assertFalse(Money.dollar(5).equals(Money.dollar(6))) },
-            { assertFalse(Money.franc(5).equals(Money.dollar(5))) }
+            { assertTrue(Money.dollar(5) == (Money.dollar(5))) },
+            { assertFalse(Money.dollar(5) == Money.dollar(6)) },
+            { assertFalse(Money.franc(5) == (Money.dollar(5))) }
         )
     }
 
@@ -31,5 +31,11 @@ internal class MoneyTest {
             { assertEquals("USD", Money.dollar(1).currency()) },
             { assertEquals("CHF", Money.franc(1).currency()) },
         )
+    }
+
+    @Test
+    fun `test simple addition`() {
+        val sum: Money = Money.dollar(5).plus(Money.dollar(5))
+        assertEquals(Money.dollar(10), sum)
     }
 }

@@ -9,7 +9,9 @@ class Money(private val amount: Int, private val currency: String) {
     }
 
     fun times(multiplier: Int) = Money(amount * multiplier, currency)
-    
+
+    fun plus(addend: Money) = Money(amount + addend.amount, currency)
+
     fun currency(): String = currency
 
     override fun equals(other: Any?): Boolean {
