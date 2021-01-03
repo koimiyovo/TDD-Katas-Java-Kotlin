@@ -1,15 +1,15 @@
 package com.tdd_by_example.money
 
-open class Money(protected val amount: Int, protected val currency: String) {
+class Money(private val amount: Int, private val currency: String) {
 
     companion object {
-        fun dollar(amount: Int): Money = Money(amount, "USD")
+        fun dollar(amount: Int) = Money(amount, "USD")
 
-        fun franc(amount: Int): Money = Money(amount, "CHF")
+        fun franc(amount: Int) = Money(amount, "CHF")
     }
 
-    open fun times(multiplier: Int): Money = Money(amount * multiplier, currency)
-
+    fun times(multiplier: Int) = Money(amount * multiplier, currency)
+    
     fun currency(): String = currency
 
     override fun equals(other: Any?): Boolean {
