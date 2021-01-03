@@ -35,7 +35,10 @@ internal class MoneyTest {
 
     @Test
     fun `test simple addition`() {
-        val sum: Money = Money.dollar(5).plus(Money.dollar(5))
-        assertEquals(Money.dollar(10), sum)
+        val five = Money.dollar(5)
+        val sum: Expression = five.plus(five)
+        val bank = Bank()
+        val reduced: Money = bank.reduce(sum, "USD")
+        assertEquals(Money.dollar(10), reduced)
     }
 }
