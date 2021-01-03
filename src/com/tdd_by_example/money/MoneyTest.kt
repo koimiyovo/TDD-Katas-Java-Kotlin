@@ -1,7 +1,9 @@
 package com.tdd_by_example.money
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 internal class MoneyTest {
@@ -14,7 +16,13 @@ internal class MoneyTest {
 
     @Test
     fun `test equality`() {
-        assertTrue(Dollar(5).equals(Dollar(5)))
+        assertAll(
+            { assertTrue(Dollar(5).equals(Dollar(5))) },
+            { assertFalse(Dollar(5).equals(Dollar(6))) },
+
+            { assertTrue(Franc(5).equals(Franc(5))) },
+            { assertFalse(Franc(5).equals(Franc(6))) }
+        )
     }
 
     @Test
