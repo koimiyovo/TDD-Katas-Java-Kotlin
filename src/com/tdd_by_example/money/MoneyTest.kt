@@ -16,4 +16,11 @@ internal class MoneyTest {
     fun `test equality`() {
         assertTrue(Dollar(5).equals(Dollar(5)))
     }
+
+    @Test
+    fun `test franc multiplication`() {
+        val five = Franc(5)
+        assertEquals(Franc(10), five.times(2))
+        assertEquals(Franc(15), five.times(3))
+    }
 }
