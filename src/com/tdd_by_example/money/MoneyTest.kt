@@ -3,8 +3,7 @@ package com.tdd_by_example.money
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertNotEquals
 
 internal class MoneyTest {
     @Test
@@ -19,9 +18,9 @@ internal class MoneyTest {
     @Test
     fun `test equality`() {
         assertAll(
-            { assertTrue(Money.dollar(5) == (Money.dollar(5))) },
-            { assertFalse(Money.dollar(5) == Money.dollar(6)) },
-            { assertFalse(Money.franc(5) == (Money.dollar(5))) }
+            { assertEquals(Money.dollar(5), (Money.dollar(5))) },
+            { assertNotEquals(Money.dollar(5), Money.dollar(6)) },
+            { assertNotEquals(Money.franc(5), (Money.dollar(5))) }
         )
     }
 
@@ -66,5 +65,18 @@ internal class MoneyTest {
         val bank = Bank()
         val result = bank.reduce(Money.dollar(1), "USD")
         assertEquals(Money.dollar(1), result)
+    }
+
+    @Test
+    fun `test reduce money with different currency`() {
+        val bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        val result: Money = bank.reduce(Money.franc(2), "USD")
+        assertEquals(Money.dollar(1), result)
+    }
+
+    @Test
+    fun `test identity rate`() {
+        assertEquals(1, Bank().rate("USD", "USD"))
     }
 }
