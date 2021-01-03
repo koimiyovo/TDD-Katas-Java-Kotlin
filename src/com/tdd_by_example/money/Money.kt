@@ -1,6 +1,6 @@
 package com.tdd_by_example.money
 
-class Money(private val amount: Int, private val currency: String) : Expression {
+class Money(internal val amount: Int, private val currency: String) : Expression {
 
     companion object {
         fun dollar(amount: Int) = Money(amount, "USD")
@@ -10,7 +10,9 @@ class Money(private val amount: Int, private val currency: String) : Expression 
 
     fun times(multiplier: Int) = Money(amount * multiplier, currency)
 
-    fun plus(addend: Money): Expression = Money(amount + addend.amount, currency)
+    fun plus(addend: Money): Expression = Sum(this, addend)
+
+    override fun reduce(to: String) = this
 
     fun currency(): String = currency
 
