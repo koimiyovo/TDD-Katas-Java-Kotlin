@@ -8,9 +8,9 @@ class Money(internal val amount: Int, private val currency: String) : Expression
         fun franc(amount: Int) = Money(amount, "CHF")
     }
 
-    fun times(multiplier: Int) = Money(amount * multiplier, currency)
+    override fun times(multiplier: Int): Expression = Money(amount * multiplier, currency)
 
-    fun plus(addend: Money): Expression = Sum(this, addend)
+    override fun plus(addend: Expression): Expression = Sum(this, addend)
 
     override fun reduce(bank: Bank, to: String): Money {
         val rate = bank.rate(currency, to)
