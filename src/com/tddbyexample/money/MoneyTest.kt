@@ -1,4 +1,4 @@
-package com.tdd_by_example.money
+package com.tddbyexample.money
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

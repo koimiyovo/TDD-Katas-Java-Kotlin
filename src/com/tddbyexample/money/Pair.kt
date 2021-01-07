@@ -1,4 +1,4 @@
-package com.tdd_by_example.money
+package com.tddbyexample.money
 
 class Pair(private val from: String, private val to: String) {
     override fun equals(other: Any?): Boolean {

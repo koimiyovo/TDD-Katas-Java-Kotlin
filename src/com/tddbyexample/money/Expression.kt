@@ -1,4 +1,4 @@
-package com.tdd_by_example.money
+package com.tddbyexample.money
 
 interface Expression {
     fun reduce(bank: Bank, to: String): Money

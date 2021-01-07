@@ -1,4 +1,4 @@
-package com.tdd_by_example.money
+package com.tddbyexample.money
 
 class Money(internal val amount: Int, private val currency: String) : Expression {
 

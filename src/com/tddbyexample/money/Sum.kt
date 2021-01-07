@@ -1,4 +1,4 @@
-package com.tdd_by_example.money
+package com.tddbyexample.money
 
 class Sum(val augend: Expression, val addend: Expression) : Expression {
     override fun reduce(bank: Bank, to: String): Money {
