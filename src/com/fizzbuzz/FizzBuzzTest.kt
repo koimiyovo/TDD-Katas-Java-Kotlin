@@ -1,4 +1,4 @@
-package com.fizz_buzz
+package com.fizzbuzz
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

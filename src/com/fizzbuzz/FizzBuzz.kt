@@ -1,4 +1,4 @@
-package com.fizz_buzz
+package com.fizzbuzz
 
 object FizzBuzz {
     fun print(maxRange: Int): String {
