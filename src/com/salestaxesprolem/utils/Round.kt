@@ -1,4 +1,4 @@
-package com.sales_taxes_prolem.utils
+package com.salestaxesprolem.utils
 
 import kotlin.math.roundToInt
 

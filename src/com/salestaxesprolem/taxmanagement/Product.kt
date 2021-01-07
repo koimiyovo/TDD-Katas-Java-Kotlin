@@ -1,6 +1,6 @@
-package com.sales_taxes_prolem.tax_management
+package com.salestaxesprolem.taxmanagement
 
-import com.sales_taxes_prolem.utils.Round
+import com.salestaxesprolem.utils.Round
 
 class Product(
     val name: String,

@@ -1,10 +1,10 @@
-package com.sales_taxes_prolem
+package com.salestaxesprolem
 
-import com.sales_taxes_prolem.tax_management.*
-import com.sales_taxes_prolem.ticket_printing.EmptyTicket
-import com.sales_taxes_prolem.ticket_printing.EmptyTicketPrinter
-import com.sales_taxes_prolem.ticket_printing.TextTicket
-import com.sales_taxes_prolem.ticket_printing.TextTicketPrinter
+import com.salestaxesprolem.taxmanagement.*
+import com.salestaxesprolem.ticketprinting.EmptyTicket
+import com.salestaxesprolem.ticketprinting.EmptyTicketPrinter
+import com.salestaxesprolem.ticketprinting.TextTicket
+import com.salestaxesprolem.ticketprinting.TextTicketPrinter
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

@@ -1,6 +1,6 @@
-package com.sales_taxes_prolem.tax_management
+package com.salestaxesprolem.taxmanagement
 
-import com.sales_taxes_prolem.utils.Format.withTwoDecimalPoint
+import com.salestaxesprolem.utils.Format.withTwoDecimalPoint
 
 class OrderItem(private val product: Product, private val quantity: Int) {
 

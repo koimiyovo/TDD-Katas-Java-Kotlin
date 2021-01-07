@@ -1,4 +1,4 @@
-package com.sales_taxes_prolem.ticket_printing
+package com.salestaxesprolem.ticketprinting
 
 interface IStringPrinter {
     val ticket: Ticket

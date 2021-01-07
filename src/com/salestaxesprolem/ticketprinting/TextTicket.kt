@@ -1,6 +1,6 @@
-package com.sales_taxes_prolem.ticket_printing
+package com.salestaxesprolem.ticketprinting
 
-import com.sales_taxes_prolem.tax_management.Order
+import com.salestaxesprolem.taxmanagement.Order
 
 class TextTicket(order: Order) :
     Ticket(order.summary(), order.totalTaxes(), order.totalPriceIncludingTaxes())
