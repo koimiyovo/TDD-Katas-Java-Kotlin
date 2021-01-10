@@ -21,8 +21,8 @@ internal class SalesTest {
     @Test
     fun `given empty basket then ticket is empty`() {
         // Given
-        val order = Basket(emptyList())
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(emptyList())
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -37,8 +37,8 @@ internal class SalesTest {
     @Test
     fun `given 1 book at 12_49 then no tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(ONE_BOOK_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(ONE_BOOK_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -54,8 +54,8 @@ internal class SalesTest {
     @Test
     fun `given 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(ONE_CHOCOLATE_BAR_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(ONE_CHOCOLATE_BAR_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -71,8 +71,8 @@ internal class SalesTest {
     @Test
     fun `given 1 book at 12_49 and 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(ONE_BOOK_NOT_IMPORTED, ONE_CHOCOLATE_BAR_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(ONE_BOOK_NOT_IMPORTED, ONE_CHOCOLATE_BAR_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -89,8 +89,8 @@ internal class SalesTest {
     @Test
     fun `given 1 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(ONE_MUSIC_CD_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(ONE_MUSIC_CD_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -106,8 +106,8 @@ internal class SalesTest {
     @Test
     fun `given 2 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(TWO_MUSIC_CD_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(TWO_MUSIC_CD_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -123,9 +123,9 @@ internal class SalesTest {
     @Test
     fun `test with 2 books and 1 music CD and 1 chocolate bar`() {
         // Given
-        val order =
-            Basket(mutableListOf(TWO_BOOKS_NOT_IMPORTED, ONE_MUSIC_CD_NOT_IMPORTED, ONE_CHOCOLATE_BAR_NOT_IMPORTED))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket =
+            Basket(listOf(TWO_BOOKS_NOT_IMPORTED, ONE_MUSIC_CD_NOT_IMPORTED, ONE_CHOCOLATE_BAR_NOT_IMPORTED))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -143,8 +143,8 @@ internal class SalesTest {
     @Test
     fun `given one imported product then import tax is applied`() {
         // Given
-        val order = Basket(mutableListOf(ONE_IMPORTED_BOX_OF_CHOCOLATES_AT_10F))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket = Basket(listOf(ONE_IMPORTED_BOX_OF_CHOCOLATES_AT_10F))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -160,9 +160,9 @@ internal class SalesTest {
     @Test
     fun `test with 1 imported box of chocolates and 1 imported bottle of perfume`() {
         // Given
-        val order =
-            Basket(mutableListOf(ONE_IMPORTED_BOX_OF_CHOCOLATES_AT_10F, ONE_IMPORTED_BOTTLE_OF_PERFUME_AT_47_5F))
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val basket =
+            Basket(listOf(ONE_IMPORTED_BOX_OF_CHOCOLATES_AT_10F, ONE_IMPORTED_BOTTLE_OF_PERFUME_AT_47_5F))
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
@@ -179,15 +179,15 @@ internal class SalesTest {
     @Test
     fun `test with imported proucts with and without tax and not imported products with and without tax`() {
         // Given
-        val order = Basket(
-            mutableListOf(
+        val basket = Basket(
+            listOf(
                 ONE_IMPORTED_BOTTLE_OF_PERFUME_AT_27_99F,
                 ONE_BOTTLE_OF_PERFUME_NOT_IMPORTED,
                 ONE_PACKET_OF_HEADACHE_PILLS_NOT_IMPORTED,
                 THREE_IMPORTED_BOXES_OF_CHOCOLATES_AT_11_25F
             )
         )
-        val ticketPrinterStrategy = TicketPrinterFactory.create(order)
+        val ticketPrinterStrategy = TicketPrinterFactory.create(basket)
 
         // When
         val result = ticketPrinterStrategy.print()
