@@ -1,6 +1,9 @@
 package com.salestaxesprolem
 
-import com.salestaxesprolem.taxmanagement.*
+import com.salestaxesprolem.taxmanagement.Order
+import com.salestaxesprolem.taxmanagement.OrderItem
+import com.salestaxesprolem.taxmanagement.Product
+import com.salestaxesprolem.taxmanagement.importtype.ImportType
 import com.salestaxesprolem.taxmanagement.taxtype.TaxType
 import com.salestaxesprolem.ticketprinting.EmptyTicket
 import com.salestaxesprolem.ticketprinting.EmptyTicketPrinter
@@ -13,7 +16,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 10 exampt of tax and not imported then price including VAT is 10`() {
         // Given
-        val item = OrderItem(Product("product", 10F, TaxType.NO_TAX, NotImported()), 1)
+        val item = OrderItem(Product("product", 10F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -25,7 +28,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 15 exampt of tax and not imported then price including VAT is 15`() {
         // Given
-        val item = OrderItem(Product("product", 15F, TaxType.NO_TAX, NotImported()), 1)
+        val item = OrderItem(Product("product", 15F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -37,7 +40,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 10 with basic tax and not imported then price including VAT is 11`() {
         // Given
-        val item = OrderItem(Product("product", 10F, TaxType.BASIC_TAX, NotImported()), 1)
+        val item = OrderItem(Product("product", 10F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -49,7 +52,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 15 with basic tax and not imported then price including VAT is 16_5`() {
         // Given
-        val item = OrderItem(Product("product", 15F, TaxType.BASIC_TAX, NotImported()), 1)
+        val item = OrderItem(Product("product", 15F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -61,7 +64,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 10 exampt of tax and imported then price including VAT is 10_5`() {
         // Given
-        val item = OrderItem(Product("product", 10F, TaxType.NO_TAX, Imported()), 1)
+        val item = OrderItem(Product("product", 10F, TaxType.NO_TAX, ImportType.IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -73,7 +76,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 15 exampt of tax and imported then price including VAT is 15_75`() {
         // Given
-        val item = OrderItem(Product("product", 15F, TaxType.NO_TAX, Imported()), 1)
+        val item = OrderItem(Product("product", 15F, TaxType.NO_TAX, ImportType.IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -85,7 +88,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 10 with basic tax and imported then price including VAT is 11_5`() {
         // Given
-        val item = OrderItem(Product("product", 10F, TaxType.BASIC_TAX, Imported()), 1)
+        val item = OrderItem(Product("product", 10F, TaxType.BASIC_TAX, ImportType.IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -97,7 +100,7 @@ internal class SaleTest {
     @Test
     fun `given one product at price of 15 with basic tax and imported then price including VAT is 17_25`() {
         // Given
-        val item = OrderItem(Product("product", 15F, TaxType.BASIC_TAX, Imported()), 1)
+        val item = OrderItem(Product("product", 15F, TaxType.BASIC_TAX, ImportType.IMPORTED), 1)
 
         // When
         val priceAllTaxesIncluded = item.priceIncludingTaxes()
@@ -125,7 +128,7 @@ internal class SaleTest {
     @Test
     fun `given 1 book at 12_49 then no tax is applied`() {
         // Given
-        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, importType = NotImported()), 1)
+        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         val orderItems = mutableListOf(book)
 
@@ -147,7 +150,8 @@ internal class SaleTest {
     @Test
     fun `given 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, importType = NotImported()), 1)
+        val chocolateBar =
+            OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         val orderItems = mutableListOf(chocolateBar)
 
@@ -169,8 +173,9 @@ internal class SaleTest {
     @Test
     fun `given 1 book at 12_49 and 1 chocolate bar at 0_85 then no tax is applied`() {
         // Given
-        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, importType = NotImported()), 1)
-        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, importType = NotImported()), 1)
+        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
+        val chocolateBar =
+            OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         val orderItems = mutableListOf(book, chocolateBar)
 
@@ -193,7 +198,7 @@ internal class SaleTest {
     @Test
     fun `given 1 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, importType = NotImported()), 1)
+        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 1)
 
         val orderItems = mutableListOf(musicCD)
 
@@ -215,7 +220,7 @@ internal class SaleTest {
     @Test
     fun `given 2 music CD at 14_99 then the basic tax is applied`() {
         // Given
-        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, importType = NotImported()), 2)
+        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 2)
 
         val orderItems = mutableListOf(musicCD)
 
@@ -237,9 +242,10 @@ internal class SaleTest {
     @Test
     fun `test with 2 books and 1 music CD and 1 chocolate bar`() {
         // Given
-        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, importType = NotImported()), 2)
-        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, importType = NotImported()), 1)
-        val chocolateBar = OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, importType = NotImported()), 1)
+        val book = OrderItem(Product("book", 12.49F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 2)
+        val musicCD = OrderItem(Product("music CD", 14.99F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 1)
+        val chocolateBar =
+            OrderItem(Product("chocolate bar", 0.85F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
 
         val orderItems = mutableListOf(book, musicCD, chocolateBar)
 
@@ -264,7 +270,7 @@ internal class SaleTest {
     fun `given one imported product then import tax is applied`() {
         // Given
         val importedBoxOfChocolates =
-            OrderItem(Product("imported box of chocolates", 10F, TaxType.NO_TAX, importType = Imported()), 1)
+            OrderItem(Product("imported box of chocolates", 10F, TaxType.NO_TAX, ImportType.IMPORTED), 1)
 
         val orderItems = mutableListOf(importedBoxOfChocolates)
 
@@ -287,9 +293,12 @@ internal class SaleTest {
     fun `test with 1 imported box of chocolates and 1 imported bottle of perfume`() {
         // Given
         val importedBoxOfChocolates =
-            OrderItem(Product("imported box of chocolates", 10F, TaxType.NO_TAX, importType = Imported()), 1)
+            OrderItem(Product("imported box of chocolates", 10F, TaxType.NO_TAX, ImportType.IMPORTED), 1)
         val importedBottleOfPerfume =
-            OrderItem(Product("imported bottle of perfume", 47.5F, TaxType.BASIC_TAX, importType = Imported()), 1)
+            OrderItem(
+                Product("imported bottle of perfume", 47.5F, TaxType.BASIC_TAX, ImportType.IMPORTED),
+                1
+            )
 
         val orderItems = mutableListOf(importedBoxOfChocolates, importedBottleOfPerfume)
 
@@ -313,13 +322,26 @@ internal class SaleTest {
     fun `test with imported proucts with and without tax and not imported products with and without tax`() {
         // Given
         val importedBottleOfPerfume =
-            OrderItem(Product("imported bottle of perfume", 27.99F, TaxType.BASIC_TAX, importType = Imported()), 1)
+            OrderItem(
+                Product(
+                    "imported bottle of perfume",
+                    27.99F,
+                    TaxType.BASIC_TAX,
+                    ImportType.IMPORTED
+                ), 1
+            )
         val notImportedBottleOfPerfume =
-            OrderItem(Product("bottle of perfume", 18.99F, TaxType.BASIC_TAX, importType = NotImported()), 1)
+            OrderItem(Product("bottle of perfume", 18.99F, TaxType.BASIC_TAX, ImportType.NOT_IMPORTED), 1)
         val packetOfHeadachePills =
-            OrderItem(Product("packet of headache pills", 9.75F, TaxType.NO_TAX, importType = NotImported()), 1)
+            OrderItem(
+                Product("packet of headache pills", 9.75F, TaxType.NO_TAX, ImportType.NOT_IMPORTED),
+                1
+            )
         val boxOfImportedChocolates =
-            OrderItem(Product("imported box of chocolates", 11.25F, TaxType.NO_TAX, importType = Imported()), 3)
+            OrderItem(
+                Product("imported box of chocolates", 11.25F, TaxType.NO_TAX, ImportType.IMPORTED),
+                3
+            )
 
         val orderItems =
             mutableListOf(
