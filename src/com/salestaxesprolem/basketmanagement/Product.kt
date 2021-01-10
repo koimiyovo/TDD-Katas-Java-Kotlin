@@ -1,9 +1,7 @@
 package com.salestaxesprolem.basketmanagement
 
-import com.salestaxesprolem.taxmanagement.importtype.ImportType
-import com.salestaxesprolem.taxmanagement.importtype.ImportTypeFactory
-import com.salestaxesprolem.taxmanagement.taxtype.TaxType
-import com.salestaxesprolem.taxmanagement.taxtype.TaxTypeFactory
+import com.salestaxesprolem.taxmanagement.ImportType
+import com.salestaxesprolem.taxmanagement.TaxType
 import com.salestaxesprolem.utils.Round
 
 class Product(
@@ -16,11 +14,7 @@ class Product(
 
     fun getTaxes() = getBasicTax() + getImportTax()
 
-    private fun getBasicTax() = Round.roundToNearest005(price * getTaxTypePercentage())
+    private fun getBasicTax() = Round.roundToNearest005(price * taxType.value)
 
-    private fun getTaxTypePercentage() = TaxTypeFactory.create(taxType).percentage()
-
-    private fun getImportTax() = Round.roundToNearest005(price * getImportTypePercentage())
-
-    private fun getImportTypePercentage() = ImportTypeFactory.create(importType).percentage()
+    private fun getImportTax() = Round.roundToNearest005(price * importType.value)
 }

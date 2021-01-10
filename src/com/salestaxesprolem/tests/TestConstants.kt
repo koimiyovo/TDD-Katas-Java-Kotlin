@@ -2,8 +2,8 @@ package com.salestaxesprolem.tests
 
 import com.salestaxesprolem.basketmanagement.BasketItem
 import com.salestaxesprolem.basketmanagement.Product
-import com.salestaxesprolem.taxmanagement.importtype.ImportType
-import com.salestaxesprolem.taxmanagement.taxtype.TaxType
+import com.salestaxesprolem.taxmanagement.ImportType
+import com.salestaxesprolem.taxmanagement.TaxType
 
 object TestConstants {
     val ONE_BOOK_NOT_IMPORTED = BasketItem(Product("book", 12.49F, TaxType.NO_TAX, ImportType.NOT_IMPORTED), 1)
