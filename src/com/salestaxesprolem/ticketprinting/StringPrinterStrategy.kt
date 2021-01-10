@@ -1,7 +1,5 @@
 package com.salestaxesprolem.ticketprinting
 
-interface IStringPrinter {
-    val ticket: Ticket
-
+interface StringPrinterStrategy {
     fun print(): String
 }
