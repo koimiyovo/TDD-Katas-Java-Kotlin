@@ -2,6 +2,8 @@ package com.salestaxesprolem.tests.gwt
 
 import com.salestaxesprolem.ticketprinting.StringPrinterFactory
 
+var ticket = ""
+
 class WhenPrintTicket
 {
     init
