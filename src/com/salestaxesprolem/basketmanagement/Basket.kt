@@ -1,14 +1,17 @@
 package com.salestaxesprolem.basketmanagement
 
-class Basket(private val basketItems: List<BasketItem>) {
+class Basket(private val items: List<Item>)
+{
+    fun totalPriceIncludingTaxes() = items.map { item -> item.priceIncludingTaxes() }.sum()
 
-    fun getTotalPriceIncludingTaxes() = basketItems.map { item -> item.getPriceIncludingTaxes() }.sum()
+    fun totalTaxes() = items.map { item -> item.taxes() }.sum()
 
-    fun getTotalTaxes() = basketItems.map { item -> item.getTaxes() }.sum()
+    fun isEmpty() = summary().isEmpty()
 
-    fun summary(): String {
+    fun summary(): String
+    {
         val output = StringBuilder()
-        basketItems.forEach { item -> output.appendLine(item.resumeLine()) }
+        items.forEach { item -> output.appendLine(item.resumeLine()) }
         return output.trimEnd().toString()
     }
 }
