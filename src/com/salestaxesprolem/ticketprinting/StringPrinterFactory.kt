@@ -8,7 +8,7 @@ object StringPrinterFactory
     {
         return when
         {
-            basket.summary().isEmpty() ->
+            basket.isEmpty() ->
             {
                 EmptyTicketPrinterStrategy()
             }

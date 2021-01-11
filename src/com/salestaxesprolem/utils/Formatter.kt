@@ -1,5 +1,6 @@
 package com.salestaxesprolem.utils
 
-object Format {
+object Formatter
+{
     fun Float.withTwoDecimalPoint() = "%.2f".format(this).replace(',', '.')
 }
