@@ -2,12 +2,13 @@ package com.salestaxesprolem.tests.gwt
 
 import com.salestaxesprolem.basketmanagement.Basket
 import com.salestaxesprolem.basketmanagement.Item
+import java.util.Collections.emptyList
 
 var basket = Basket(emptyList())
 
-class Given(vararg items: Item)
+object Given
 {
-    init
+    fun basket(vararg items: Item)
     {
         basket = Basket(items.toList())
     }

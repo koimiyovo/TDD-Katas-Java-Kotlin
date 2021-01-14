@@ -4,9 +4,9 @@ import com.salestaxesprolem.ticketprinting.StringPrinterFactory
 
 var ticket = ""
 
-class WhenPrintTicket
+object When
 {
-    init
+    fun printTicket()
     {
         val ticketPrinterStrategy = StringPrinterFactory.create(basket)
         ticket = ticketPrinterStrategy.print()
